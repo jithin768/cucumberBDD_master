@@ -16,7 +16,7 @@ public class MyStepDefinitions {
         driver.get("https://askomdch.com/store/");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1000));
-        Thread.sleep(5000);
+
     }
     @When("I add a {string} to the cart1")
     public void i_add_a_to_the_cart1(String string) {
