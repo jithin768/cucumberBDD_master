@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeClass;
         //dryRun = true,
         monochrome = true,
         //tags="@scenario1",
-        glue={"awesomecucumber.stepDef","awesomecucumber.hooks","awesomecucumber.types"},
+        glue={"awesomecucumber.stepDef"},
         features="src/test/resources/awesomecucumber"
 
 )

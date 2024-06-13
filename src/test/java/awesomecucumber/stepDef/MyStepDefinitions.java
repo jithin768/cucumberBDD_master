@@ -5,13 +5,14 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.time.Duration;
 
 public class MyStepDefinitions {
     @Given("I'm on the store page1")
     public void i_m_on_the_store_page1() {
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new FirefoxDriver();
         driver.get("https://askomdch.com/store/");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1000));
