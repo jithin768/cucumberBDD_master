@@ -2,6 +2,7 @@ package awesomecucumber.stepDef;
 
 import awesomecucumber.factory.DriverFactory;
 import awesomecucumber.pages.CartPage;
+import awesomecucumber.pages.CheckoutPage;
 import awesomecucumber.pages.StorePage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -58,53 +59,30 @@ public class MyStepDefinitions {
     }
     @Given("I'm on the Checkout page")
     public void i_m_on_the_checkout_page() {
-        By proceedToCheckoutBtn=By.cssSelector(".checkout-button");
-        driver.findElement(proceedToCheckoutBtn).click();
+       new CartPage(driver).checkout();
     }
     @When("I provide billing details")
     public void i_provide_billing_details(List<Map<String, String>> billingDetails) {
 
-        By billingFirstnameFld=By.id("billing_first_name");
-        By billingLastNameFld=By.id("billing_last_name");
-        By billingAddressOneFld=By.id("billing_address_1");
-        By billingCityFld=By.id("billing_city");
-        By billingStateDropDown=By.id("billing_state");
-        By billingZipFld=By.id("billing_postcode");
-        By billingEmailFld=By.id("billing_email");
-
-        driver.findElement(billingFirstnameFld).clear();
-        driver.findElement(billingFirstnameFld).sendKeys(billingDetails.get(0).get("firstname"));
-        driver.findElement(billingLastNameFld).clear();
-        driver.findElement(billingLastNameFld).sendKeys(billingDetails.get(0).get("lastname"));
-        driver.findElement(billingAddressOneFld).clear();
-        driver.findElement(billingAddressOneFld).sendKeys(billingDetails.get(0).get("address_line1"));
-        driver.findElement(billingCityFld).clear();
-        driver.findElement(billingCityFld).sendKeys(billingDetails.get(0).get("city"));
-        //Select select=new Select(driver.findElement(billingStateDropDown));
-        //select.selectByVisibleText(billingDetails.get(0).get("state"));
-        driver.findElement(billingZipFld).clear();
-        driver.findElement(billingZipFld).sendKeys(billingDetails.get(0).get("zip"));
-        driver.findElement(billingEmailFld).clear();
-        driver.findElement(billingEmailFld).sendKeys(billingDetails.get(0).get("email"));
-
+        CheckoutPage checkoutPage=new CheckoutPage(driver);
+        checkoutPage.setBillingDetails(billingDetails.get(0).get("firstname"),
+                billingDetails.get(0).get("lastname"),
+                billingDetails.get(0).get("address_line1"),
+                billingDetails.get(0).get("city"),
+                billingDetails.get(0).get("state"),
+                billingDetails.get(0).get("zip"),
+                billingDetails.get(0).get("email"));
 
     }
     @When("I place an order")
-    public void i_place_an_order() throws InterruptedException {
-        System.out.println("Test1");
-        By placeOrderBtn=By.id("place_order");
-       System.out.println("Test1");
-        Thread.sleep(5000);
-       driver.findElement(placeOrderBtn).click();
-        Thread.sleep(5000);
-        driver.findElement(placeOrderBtn).click();
+    public void i_place_an_order() {
+      new CheckoutPage(driver).placeOrder();
 
     }
     @Then("the order should be placed successfully")
     public void the_order_should_be_placed_successfully() {
-       By noticeTxt=By.cssSelector(".woocommerce-notice.woocommerce-notice--success.woocommerce-thankyou-order-received");
-       String actualNoticeMsg=driver.findElement(noticeTxt).getText();
-       Assert.assertEquals("Thank you. Your order has been received.", actualNoticeMsg);
+        Assert.assertEquals("Thank you. Your order has been received.",
+               new CheckoutPage(driver).getNotice());
     }
 
 }

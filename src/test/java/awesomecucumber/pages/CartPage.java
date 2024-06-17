@@ -10,6 +10,9 @@ public class CartPage extends BasePage{
 
     @FindBy(css="input[type=\"number\"]") private WebElement productQuantityFld;
 
+    @FindBy(css=".checkout-button") private WebElement proceedToCheckoutBtn;
+
+
     public CartPage(WebDriver driver) {
         super(driver);
     }
@@ -20,6 +23,9 @@ public class CartPage extends BasePage{
 
     public String getProductQuantity(){
         return wait.until(ExpectedConditions.visibilityOf(productQuantityFld)).getAttribute("value");
+    }
+    public void checkout(){
+        wait.until(ExpectedConditions.elementToBeClickable(proceedToCheckoutBtn)).click();
     }
 
 
