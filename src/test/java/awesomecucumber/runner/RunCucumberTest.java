@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeClass;
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         //dryRun = true,
         monochrome = true,
-        //tags="@scenario1",
+        //tags="@scenario",
         glue={"awesomecucumber.stepDef","awesomecucumber.hooks"},
         features="src/test/resources/awesomecucumber"
 
